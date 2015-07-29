@@ -10,6 +10,13 @@
   <link rel="shortcut icon" href="{Favicon}">
   <link rel="canonical" href="{block:IndexPage}{BlogURL}{/block:IndexPage}{block:PermalinkPage}{Permalink}{/block:PermalinkPage}">
   <link rel="alternate" type="application/rss+xml" href="{RSS}">
+  <meta name="text:Username on Facebook" content=""/>
+  <meta name="text:Username on Instagram" content=""/>
+  <meta name="text:Permalink Tag One" content=""/>
+  <meta name="text:Permalink Tag Two" content=""/>
+  <meta name="text:Permalink Tag Three" content=""/>
+  <meta name="text:Permalink Tag Four" content=""/>
+  <meta name="text:Permalink Tag Five" content=""/>
   {block:Hidden}
     <!--
 
@@ -141,15 +148,56 @@
 
     <nav role="navigation">
       <ul>
-        {block:HasPages}{block:Pages}<li><a href="{URL}">{Label}</a></li>{/block:Pages}{/block:HasPages}
-        {block:AskEnabled}<li><a href="/ask">{AskLabel}</a></li>{/block:AskEnabled}
+        {block:HasPages}
+            {block:Pages}
+                <li><a href="{URL}">{Label}</a></li>
+            {/block:Pages}
+        {/block:HasPages}
+        {block:AskEnabled}
+            <li><a href="/ask">{AskLabel}</a></li>
+        {/block:AskEnabled}
+        {block:IfPermalinkTagOne}
+            <li>
+              <a href="http://jamqueirozfotografia.tumblr.com/tagged/{text:Permalink Tag One}" title="{text:Permalink Tag One}">
+                {text:Permalink Tag One}
+              </a>
+            </li>
+        {/block:IfPermalinkTagOne}
+        {block:IfPermalinkTagTwo}
+            <li>
+              <a href="http://jamqueirozfotografia.tumblr.com/tagged/{text:Permalink Tag Two}" title="{text:Permalink Tag Two}">
+                {text:Permalink Tag Two}
+              </a>
+            </li>
+        {/block:IfPermalinkTagTwo}
+        {block:IfPermalinkTagThree}
+            <li>
+              <a href="http://jamqueirozfotografia.tumblr.com/tagged/{text:Permalink Tag Three}" title="{text:Permalink Tag Three}">
+                {text:Permalink Tag Three}
+              </a>
+            </li>
+        {/block:IfPermalinkTagThree}
+        {block:IfPermalinkTagFour}
+            <li>
+              <a href="http://jamqueirozfotografia.tumblr.com/tagged/{text:Permalink Tag Four}" title="{text:Permalink Tag Four}">
+                {text:Permalink Tag Four}
+              </a>
+            </li>
+        {/block:IfPermalinkTagFour}
+        {block:IfPermalinkTagFive}
+            <li>
+              <a href="http://jamqueirozfotografia.tumblr.com/tagged/{text:Permalink Tag Five}" title="{text:Permalink Tag Five}">
+                {text:Permalink Tag Five}
+              </a>
+            </li>
+        {/block:IfPermalinkTagFive}
         {block:IfUsernameOnFacebook}
-        <li class="social-icon">
-          <a href="https://www.facebook.com/{text:Username on Facebook}" title="Facebook">
-            <i class="fa fa-fw fa-facebook"></i>
-          </a>
-        </li>
-    {/block:IfUsernameOnFacebook}
+            <li class="social-icon">
+              <a href="https://www.facebook.com/{text:Username on Facebook}" title="Facebook">
+                <i class="fa fa-fw fa-facebook"></i>
+              </a>
+            </li>
+        {/block:IfUsernameOnFacebook}
     {block:IfUsernameOnInstagram}
         <li class="social-icon">
           <a href="http://instagram.com/{text:Username on Instagram}" title="Instagram">
@@ -278,7 +326,7 @@
         <div class="replies">{Replies}</div>
       {/block:Answer}
       
-        {block:IfPermalinkTags}{block:HasTags}
+        {block:HasTags}
         <ul class="main-tags">
           {block:Tags}
           <li>
@@ -286,7 +334,7 @@
           </li>
           {/block:Tags}
         </ul>
-      {/block:HasTags}{/block:IfPermalinkTags}
+      {/block:HasTags}
       
       <div class="main-footer">
           <div class="main-date">
