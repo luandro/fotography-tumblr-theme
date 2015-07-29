@@ -21,35 +21,149 @@
      -->
   {/block:Hidden}
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/flexboxgrid/6.2.0/flexboxgrid.min.css" type="text/css" >
+
   <style type="text/css">
     /*Tumblr Global Appearance */
-    body {background:{BackgroundColor};}
+    body {
+        background: white;
+        text-align: center;
+        font-family: 'Ubuntu', arial;
+    }
     h1 > a {color:{TitleColor};}
-    a {color:{AccentColor}}
+    h2 a {
+        color: {TitleColor};
+    }
+    p {
+        font-size: 1em;
+        line-height: 1.5em;
+    }
+    a {
+        color:{AccentColor}
+        text-decoration: none; 
+    }
     {CustomCSS}
+    a {
+        text-decoration: none; 
+    }
+    nav {
+        margin-top: 7%;
+        margin-bottom: 15%;
+    }
+    nav li {
+        list-style: none;
+        display: inline-block;
+    }
+    nav li a {
+        color: black;
+        text-transform: uppercase;
+    }
+    .hide {
+        text-indent:-9999px;
+        margin-bottom: -30px;
+    }
+    .content {
+        margin: 0 auto;
+        width: 85%;
+    }
+    .main-header img {
+        margin: 0 auto;
+        width: 420px;
+        height: auto;
+    }
+    .main-pic {
+        text-align: center;
+    }
+    .main-date {
+        text-align: left;
+        font-size: 0.6em;
+        line-height: 0;
+        font-style: italic;
+        float: left;
+    }
+    .body-text {
+        text-align: left;
+    }
+    .body-text img {
+        width: 100%;
+        height: auto;
+        text-align: center;
+    }
+    .hash {
+        color: grey;
+    }
+    .main-tags {
+        text-align: left;
+        font-size: 0.8em;
+        padding: 30px 0;
+    }
+    .main-tags a, a:visited {
+        font-style: italic
+    }
+    .main-tags li {
+        list-style: none;
+        display: inline-block;
+    }
+    .main-footer {
+        padding-bottom: 100px;
+    }
+    .main-footer ul li {
+        display: inline-block;
+        list-style: none;
+        margin: 0 30px;
+    }
+    @media screen and (min-width:768px) {
+        .content {
+            width: 75%;
+        }
+    }
+    @media screen and (min-width:1024px) {
+        .content {
+            width: 960px;
+        }
+    } 
   </style>
 </head>
 <body>
 
   <header role="banner" class="header">
 
-    {block:ShowTitle}<h1 id="logo"><a href="/">{Title}</a></h1>{/block:ShowTitle}
+    {block:ShowTitle}<h1 id="logo" class="hide"><a href="/">{Title}</a></h1>{/block:ShowTitle}
     {block:ShowDescription}{block:Description}<div class="description">{Description}</div>{/block:Description}{/block:ShowDescription}
-    {block:ShowHeaderImage}<img src="{HeaderImage}">{/block:ShowHeaderImage}
-    {block:ShowAvatar}<img src="{PortraitURL-128}">{/block:ShowAvatar}
+    {block:ShowHeaderImage}
+        <div class="main-header">
+            <img src="{HeaderImage}">
+        </div>
+    {/block:ShowHeaderImage}
+    <!-- {block:ShowAvatar}<img src="{PortraitURL-128}">{/block:ShowAvatar} -->
 
     <nav role="navigation">
       <ul>
         {block:HasPages}{block:Pages}<li><a href="{URL}">{Label}</a></li>{/block:Pages}{/block:HasPages}
-        <li><a href="/archive">{lang:Archive}</a></li>
         {block:AskEnabled}<li><a href="/ask">{AskLabel}</a></li>{/block:AskEnabled}
+        {block:IfUsernameOnFacebook}
+        <li class="social-icon">
+          <a href="https://www.facebook.com/{text:Username on Facebook}" title="Facebook">
+            <i class="fa fa-fw fa-facebook"></i>
+          </a>
+        </li>
+    {/block:IfUsernameOnFacebook}
+    {block:IfUsernameOnInstagram}
+        <li class="social-icon">
+          <a href="http://instagram.com/{text:Username on Instagram}" title="Instagram">
+            <i class="fa fa-fw fa-instagram"></i>
+          </a>
+        </li>
+    {/block:IfUsernameOnInstagram}
       </ul>
     </nav>
 
-    <form id="search" action="/search" method="get">
+    <!-- <form id="search" action="/search" method="get">
       <input role="textbox" type="search" placeholder="{lang:Search}" name="q" value="{SearchQuery}">
       <input role="button" type="submit" value="{lang:Search}">
-    </form>
+    </form> -->
 
   </header>
 
@@ -66,11 +180,7 @@
 
     {block:Posts}
     <article class="post {PostType} {TagsAsClasses}">
-      {block:Date}
-        {block:NewDayDate}<p>{DayOfWeek}, {Month} {DayOfMonth}, {Year}</p>{/block:NewDayDate}
-        {block:SameDayDate}<p>{DayOfWeek}, {Month} {DayOfMonth}, {Year}</p>{/block:SameDayDate}
-      {/block:Date}
-
+      
       {block:Text}
         {block:Title}<h2><a href="{Permalink}">{Title}</a></h2>{/block:Title}
         {block:Body}
@@ -100,12 +210,14 @@
         </div>
         {block:Caption}<div class="caption">{Caption}</div>{/block:Caption}
       {/block:Audio}
-
+      
       {block:Photo}
-        <figure class="{block:HighRes}high-res{/block:HighRes}{block:Caption} with-caption{/block:Caption}" data-photo-width="{PhotoWidth-HighRes}">
-          {LinkOpenTag}<img src="{PhotoURL-HighRes}" alt="{PhotoAlt}" width="{PhotoWidth-HighRes}" height="{PhotoHeight-HighRes}">{LinkCloseTag}
-          {block:Caption}<figcaption class="caption">{Caption}</figcaption>{/block:Caption}
-        </figure>
+        <div class="main-pic">
+            <figure class="{block:HighRes}high-res{/block:HighRes}{block:Caption} with-caption{/block:Caption}" data-photo-width="{PhotoWidth-HighRes}">
+              {LinkOpenTag}<img  style='width:100%; align-text: center;' border="0" src="{PhotoURL-HighRes}" alt="{PhotoAlt}">{LinkCloseTag}
+              {block:Caption}<figcaption class="caption">{Caption}</figcaption>{/block:Caption}
+            </figure>
+        </div>
       {/block:Photo}
 
       {block:Photoset}
@@ -165,12 +277,32 @@
         {/block:Answerer}
         <div class="replies">{Replies}</div>
       {/block:Answer}
-
-      {block:IndexPage}
-        {LikeButton color="grey"}
-        {ReblogButton color="grey"}
-        <p><a href="{Permalink}" class="permalink">{lang:Permalink}</a></p>
-      {/block:IndexPage}
+      
+        {block:IfPermalinkTags}{block:HasTags}
+        <ul class="main-tags">
+          {block:Tags}
+          <li>
+            <a href="{TagURL}" {Target} rel="tag"><span class="hash">#</span>{Tag}</a>
+          </li>
+          {/block:Tags}
+        </ul>
+      {/block:HasTags}{/block:IfPermalinkTags}
+      
+      <div class="main-footer">
+          <div class="main-date">
+             {block:Date}
+                {block:NewDayDate}<p>{DayOfWeek}, {Month} {DayOfMonth}, {Year}</p>{/block:NewDayDate}
+                {block:SameDayDate}<p>{DayOfWeek}, {Month} {DayOfMonth}, {Year}</p>{/block:SameDayDate}
+            {/block:Date}
+          </div>
+        
+          {block:IndexPage}
+                <ul>
+                    <li>{LikeButton color="grey"}</li>
+                    <li>{ReblogButton color="grey"}</li>
+                </ul>
+          {/block:IndexPage}
+       </div>
 
     </article>
     {/block:Posts}
